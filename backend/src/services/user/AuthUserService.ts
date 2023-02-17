@@ -27,7 +27,7 @@ class AuthUserService {
       throw new Error("Usuário ou senha incorretos")
     }
 
-    // gerar um token JWT e devolver os dados do usario como id, name e email
+    // gerar um token JWT e devolve os dados do usario como id, name e email
     const token = sign(
       {
         name: user.name,
