@@ -1,4 +1,10 @@
 import Head from "next/head"
+import Image from "next/image"
+import styles from "../../styles/home.module.scss"
+
+import logoImg from '../../public/logo.svg'
+
+import { Input } from "../components/ui/input"
 
 export default function Home() {
   return (
@@ -6,8 +12,17 @@ export default function Home() {
     <Head>
       <title>Play Pizzas - Faça seu login</title>
     </Head>
-    <div>
-      <h1>Play Pizzas</h1>
+    <div className={styles.containerCenter}>
+      <Image src={logoImg} alt="Logo Play Pizzas"/>
+
+      <div className={styles.login}>
+        <form>
+          <Input placeholder="Digite seu Email" type="text"/>
+          <br/>
+          <Input placeholder="Digite sua Senha"  type="password"/>
+        </form>
+      </div>
+
     </div>
     </>
   )
