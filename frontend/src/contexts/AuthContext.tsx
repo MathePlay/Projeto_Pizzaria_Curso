@@ -4,6 +4,8 @@ import Router from 'next/router';
 
 import { api } from '../services/apiClient';
 
+import { toast } from 'react-toastify';
+
 type AuthContextData = {
   user: UserProps;
   isAuthenticated: boolean;
@@ -23,7 +25,7 @@ type SignInProps = {
   password: string;
 }
 
-type SignUpProps ={
+type SignUpProps = {
   name: string;
   email: string;
   password: string;
@@ -58,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { id, name, token } = response.data;
       setCookie(undefined, '@playpizzas.token', token, {
-        maxAge: 60*60*24*30, // Expirar em 1 mes
+        maxAge: 60 * 60 * 24 * 30, // Expirar em 1 mes
         path: "/", // Quais caminhos terrão acceso ao cookie
       })
 
@@ -71,17 +73,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
       //Passar para proximas requisiçoes o nosso token
       api.defaults.headers['Authorization'] = `Bearer ${token}`
 
+      toast.success('Logado com sucesso!')
+
       // Redirecionar o user para /dashboard
       Router.push('/dashboard')
 
 
     } catch (err) {
-      console.log("Erro ao Acessar ", err)
+      toast.error('Erro ao acessar')
+      console.log("Erro ao acessar ", err)
     }
   }
 
-  async function signUp({ name, email, password}: SignUpProps){
-    try{
+  async function signUp({ name, email, password }: SignUpProps) {
+    try {
 
       const response = await api.post('/users', {
         name,
@@ -89,14 +94,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password
       })
 
-      console.log("Cadastrado com sucesso!")
+      toast.success('Conta criada com sucesso!')
 
       Router.push('/')
 
 
 
-    }catch(err){
-      console.log("Erro ao cadastrar", err)
+    } catch (err) {
+      toast.error('Erro ao cadastrar')
     }
   }
 

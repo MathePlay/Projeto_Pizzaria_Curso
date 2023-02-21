@@ -8,7 +8,10 @@ import logoImg from '../../public/logo.svg'
 import { Input } from "../components/ui/input"
 import { Button } from "../components/ui/button"
 
+
 import { AuthContext } from '../contexts/AuthContext'
+
+import { toast } from 'react-toastify'
 
 import Link from "next/link"
 
@@ -23,8 +26,8 @@ export default function Home() {
   async function handleLogin(event: FormEvent) {
     event.preventDefault();
 
-    if(email === '' || password === ''){
-      alert("Preencha os dados")
+    if (email === '' || password === '') {
+      toast.warning("Preencha todos os campos")
       return;
     }
 
@@ -57,11 +60,11 @@ export default function Home() {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <Input 
-              placeholder="Digite sua Senha" 
-              type="password" 
+            <Input
+              placeholder="Digite sua Senha"
+              type="password"
               value={password}
-              onChange={(e) => { setPassword(e.target.value)}}
+              onChange={(e) => { setPassword(e.target.value) }}
             />
 
             <Button type="submit" loading={loading}>Acessar</Button>
