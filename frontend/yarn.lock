@@ -299,7 +299,7 @@ nanoid@^3.3.4:
 
 next@^13.1.6:
   version "13.1.6"
-  resolved "https://registry.npmjs.org/next/-/next-13.1.6.tgz"
+  resolved "https://registry.yarnpkg.com/next/-/next-13.1.6.tgz#054babe20b601f21f682f197063c9b0b32f1a27c"
   integrity sha512-hHlbhKPj9pW+Cymvfzc15lvhaOZ54l+8sXDXJWm3OBNBzgrVj6hwGPmqqsXg40xO1Leq+kXpllzRPuncpC0Phw==
   dependencies:
     "@next/env" "13.1.6"
