@@ -19,7 +19,7 @@
 }
 
 .input{
-    background-color: var(--dar-900);
+    background-color: var(--dark-900);
     border: 0;
     padding: 1rem;
     height: 40px;
@@ -27,6 +27,7 @@
     color: var(--white);
     border: 1px solid var(--gray-100);
     margin-bottom: 1rem;
+    padding: 0 0.5rem;
 }
 
 .buttonAdd{

@@ -20,11 +20,11 @@ export function Header() {
 
                 <nav className={styles.menuNav}>
                     <Link href="/category">
-                        Categoria
+                        Nova Categoria
                     </Link>
 
                     <Link href="/product">
-                        Cardapio
+                        Novo Produto
                     </Link>
 
                     <button onClick={signOut}>
