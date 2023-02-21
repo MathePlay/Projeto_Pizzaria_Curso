@@ -8,7 +8,8 @@ type AuthContextData = {
   user: UserProps;
   isAuthenticated: boolean;
   signIn: (credentials: SignInProps) => Promise<void>;
-  singOut: () => void;
+  signOut: () => void;
+  signUp: (credentials: SignUpProps) => Promise<void>;
 }
 
 type UserProps = {
@@ -22,13 +23,19 @@ type SignInProps = {
   password: string;
 }
 
+type SignUpProps ={
+  name: string;
+  email: string;
+  password: string;
+}
+
 type AuthProviderProps = {
   children: ReactNode;
 }
 
 export const AuthContext = createContext({} as AuthContextData)
 
-export function singOut() {
+export function signOut() {
   try {
     destroyCookie(undefined, '@playpizzas.token')
     Router.push('/')
@@ -72,8 +79,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.log("Erro ao Acessar ", err)
     }
   }
+
+  async function signUp({ name, email, password}: SignUpProps){
+    try{
+
+      const response = await api.post('/users', {
+        name,
+        email,
+        password
+      })
+
+      console.log("Cadastrado com sucesso!")
+
+      Router.push('/')
+
+
+
+    }catch(err){
+      console.log("Erro ao cadastrar", err)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, singOut }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   )
