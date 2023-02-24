@@ -72,6 +72,25 @@ export default function Dashboard({ orders }: HomeProps) {
         setModalVisible(true)
     }
 
+    async function handleFinishItem(id: string) {
+        const apiClient = setupAPIClient();
+        await apiClient.put("/order/finish", { order_id: id });
+
+        const response = await apiClient.get("/orders");
+
+        setOrderList(response.data)
+
+        setModalVisible(false);
+    }
+
+    async function refreshOrders() {
+        const apiClient = setupAPIClient();
+
+        const response = await apiClient.get("/orders");
+
+        setOrderList(response.data)
+    }
+
 
 
 
@@ -88,11 +107,18 @@ export default function Dashboard({ orders }: HomeProps) {
                     <div className={style.containerHeader}>
                         <h1>Ultimos Pedidos</h1>
                         <button>
-                            <FiRefreshCcw size={25} color="#efffa3" />
+                            <FiRefreshCcw size={25} color="#efffa3" onClick={refreshOrders} />
                         </button>
                     </div>
 
                     <article className={style.listOrder}>
+
+                        {orderList.length === 0 && (
+                            <span className={style.emptyList}>
+                                Nenhum pedido aberto foi encontrado...
+                            </span>
+                        )}
+
                         {orderList.map(item => (
                             <section key={item.id} className={style.orderItem}>
                                 <button onClick={() => handleOpenModalView(item.id)}>
@@ -107,7 +133,12 @@ export default function Dashboard({ orders }: HomeProps) {
                 </main>
 
                 {modalVisible && (
-                    <ModalOrder/>
+                    <ModalOrder
+                        isOpen={modalVisible}
+                        onRequestClose={handleCloseModal}
+                        order={modal}
+                        handleFinishOrder={handleFinishItem}
+                    />
                 )}
             </div>
         </>
@@ -118,6 +149,8 @@ export const getServerSideProps = canSSRAuth(async (ctx) => {
     const apiClient = setupAPIClient(ctx);
 
     const responde = await apiClient.get('/orders');
+
+    console.log(responde)
 
 
 
